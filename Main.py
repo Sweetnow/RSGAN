@@ -126,6 +126,7 @@ def training(model, dataset, args, saver = None): # saver is an object to save p
                 logging.info(
                     "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
                         epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
+                # loss is deprecated
                 print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
                         epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
         if saver != None:

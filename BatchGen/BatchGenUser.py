@@ -1,7 +1,7 @@
 import numpy as np
 from multiprocessing import Pool, Array
 from multiprocessing import cpu_count
-
+from functools import reduce
 _user_input = None
 _item_input = None
 _labels = None
@@ -61,6 +61,8 @@ def shuffle(samples, batch_size, dataset=None):
     _batch_size = batch_size
     _index = list(range(len(_labels)))
     np.random.shuffle(_index)
+    if not isinstance(_item_input[0], int):
+        _item_input = reduce(lambda x, y: x+y, _item_input, [])
     shared_mem = (Array('i', _user_input), Array(
         'i', _item_input), Array('i', _labels), Array('i', _index))
     num_batch = len(_labels) // _batch_size
@@ -79,8 +81,13 @@ def _get_train_batch(i):
     # _user_input, _item_input, _labels, _index = shared_mem
     user_batch, item_batch, labels_batch = [], [], []
     begin = i * _batch_size
+    isBPR = len(_user_input) != len(_item_input)
     for idx in range(begin, begin + _batch_size):
         user_batch.append(_user_input[_index[idx]])
-        item_batch.append(_item_input[_index[idx]])
+        if isBPR:
+            item_batch.append(
+                [_item_input[_index[idx]*2], _item_input[_index[idx]*2+1]])
+        else:
+            item_batch.append(_item_input[_index[idx]])
         labels_batch.append(_labels[_index[idx]])
     return np.array(user_batch), np.array(item_batch), np.array(labels_batch)

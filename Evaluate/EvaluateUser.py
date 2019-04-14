@@ -75,6 +75,7 @@ def eval(model, sess, dataset, DictList):
     # Single thread
     # else:
     for idx in range(len(_DictList)):
+        # test for every user
         (hr,ndcg, loss) = _eval_one_rating(idx)
         hits.append(hr)
         ndcgs.append(ndcg)
