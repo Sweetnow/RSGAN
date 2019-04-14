@@ -66,7 +66,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
         losses = [r[2] for r in res]
     # Single thread
     else:
-        for idx in xrange(len(_testRatings)):
+        for idx in range(len(_testRatings)):
             (hr,ndcg, loss,attention) = _eval_one_rating(idx)
             if _model.logAttention:
                 attentions[0].append(attention[0][-1])
@@ -78,7 +78,7 @@ def eval(model, sess, testRatings, testNegatives, DictList):
 
 def load_test_as_list():
     DictList = []
-    for idx in xrange(len(_testRatings)):
+    for idx in range(len(_testRatings)):
         rating = _testRatings[idx]
         items = _testNegatives[idx]
         user = _trainList[idx]
@@ -113,7 +113,7 @@ def _eval_one_rating(idx):
     else:
         predictions,loss = _sess.run([_model.output, _model.loss], feed_dict = feed_dict)
 
-    for i in xrange(len(items)):
+    for i in range(len(items)):
         item = items[i]
         map_item_score[item] = predictions[i]
     # items.pop()
@@ -131,7 +131,7 @@ def _getHitRatio(ranklist, gtItem):
     return 0
 
 def _getNDCG(ranklist, gtItem):
-    for i in xrange(len(ranklist)):
+    for i in range(len(ranklist)):
         item = ranklist[i]
         if item == gtItem:
             return math.log(2) / math.log(i+2)

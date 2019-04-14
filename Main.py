@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument('--loss_func', nargs='?', default='BPR',
                         help='Choose loss: logloss, BPR')
     parser.add_argument('--batch_gen', nargs='?', default='unfixed',
-                        help='Coose batch gen: fixed, unfixed')
+                        help='Choose batch gen: fixed, unfixed')
     parser.add_argument('--pretrain', type=int, default=1,
                         help='0: No pretrain, 1: Pretrain with updating FISM variables, 2:Pretrain with fixed FISM variables.')
     parser.add_argument('--verbose', type=int, default=1,
@@ -75,13 +75,13 @@ def training(model, dataset, args, saver = None): # saver is an object to save p
         # pretrain nor not
         sess.run(tf.global_variables_initializer())
         logging.info("initialized")
-        print "initialized"
+        print("initialized")
         writer = tf.summary.FileWriter('./graphs', sess.graph)
 
         # initialize for training batches
         if args.batch_gen == "fixed":
             if args.model == "FISM":
-                samples = BatchItem.sampling(args, dataset, args.num_neg)
+                samples = BatchItem.sampling(dataset, args.num_neg)
             else:
                 samples = BatchUser.sampling(args, dataset, args.num_neg)
 
@@ -97,7 +97,7 @@ def training(model, dataset, args, saver = None): # saver is an object to save p
             batch_begin = time()
             if args.model == "FISM":
                 if args.batch_gen == "unfixed":
-                    samples = BatchItem.sampling(args, dataset, args.num_neg)
+                    samples = BatchItem.sampling(dataset, args.num_neg)
                 batches = BatchItem.shuffle(samples, args.batch_size, dataset)
             else :
                 if args.batch_gen == "unfixed":
@@ -126,8 +126,8 @@ def training(model, dataset, args, saver = None): # saver is an object to save p
                 logging.info(
                     "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
                         epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
-                print "Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
-                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time)
+                print("Epoch %d [%.1fs + %.1fs]: HR = %.4f, NDCG = %.4f, loss = %.4f [%.1fs] train_loss = %.4f [%.1fs]" % (
+                        epoch_count, batch_time, train_time, hr, ndcg, test_loss, eval_time, train_loss, loss_time))
         if saver != None:
             saver.save(model, sess)
 
@@ -213,7 +213,6 @@ if __name__ == '__main__':
 
     #initialize dataset
     dataset = Dataset(args.path + args.dataset)
-
     #initialize models
     if args.model == "FISM" :
         model = FISM(dataset.num_items, args)

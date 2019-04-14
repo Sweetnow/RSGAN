@@ -42,7 +42,7 @@ def shuffle(dataset, batch_choice, num_negatives):   #negative sampling and shuf
             _num_batch = iterations / _batch_size
             return _preprocess(_get_train_batch_fixed)
         else:
-            print "invalid batch size !"
+            print("invalid batch size !")
 
 def batch_gen(batches, i):  
     return [(batches[r])[i] for r in range(4)]
@@ -85,7 +85,7 @@ def _get_train_data_user():
             item_input.append(i)
             labels.append(1)
             # negative instances
-            for t in xrange(_num_negatives):
+            for t in range(_num_negatives):
                 j = np.random.randint(num_items)
                 while j in trainList[u]:
                     j = np.random.randint(num_items)
@@ -130,7 +130,7 @@ def _get_train_data_fixed():
         item_input.append(i)
         labels.append(1)
         # negative instances
-        for t in xrange(_num_negatives):
+        for t in range(_num_negatives):
             j = np.random.randint(num_items)
             while train.has_key((u, j)):
                 j = np.random.randint(num_items)
@@ -171,6 +171,6 @@ def _remove_item(feature_mask, users, item):
 
 def _add_mask(feature_mask, features, num_max):
     #uniformalize the length of each batch
-    for i in xrange(len(features)):
+    for i in range(len(features)):
         features[i] = features[i] + [feature_mask] * (num_max+1 - len(features[i]))
     return features

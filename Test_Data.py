@@ -11,4 +11,4 @@ class TEST:
 dataset = Dataset('Data/ml-1m')
 model = TEST
 EvalDict = EvalUser.init_evaluate_model(model, dataset)
-print EvalDict[0]['user_input'].shape
+print(EvalDict[0]['user_input'].shape)

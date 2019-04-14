@@ -23,7 +23,7 @@ _DictList = None
 
 def init_evaluate_model(model,  dataset):
     DictList = []
-    for idx in xrange(len(dataset.testRatings)):
+    for idx in range(len(dataset.testRatings)):
         user, gtItem = dataset.testRatings[idx]
         if model.fix == 'fixed':
             items = dataset.testNegatives[idx]
@@ -33,7 +33,7 @@ def init_evaluate_model(model,  dataset):
             pos_samples.append(dataset.trainList[idx])
             for i in items[::-1]:
                 if not pos_samples:
-                    break;
+                    break
                 elif pos_samples[-1] == i:
                     del items[i]
                     pos_samples.pop()
@@ -78,7 +78,7 @@ def eval(model, sess, dataset, DictList):
     # losses = [r[2] for r in res]
     # Single thread
     # else:
-    for idx in xrange(len(_DictList)):
+    for idx in range(len(_DictList)):
         (hr,ndcg, loss) = _eval_one_rating(idx)
         hits.append(hr)
         ndcgs.append(ndcg)
@@ -91,7 +91,7 @@ def _eval_one_rating(idx):
     gtItem = items[-1]
     predictions,loss = _sess.run([_model.output, _model.loss], feed_dict = _DictList[idx])
 
-    for i in xrange(len(items)):
+    for i in range(len(items)):
         item = items[i]
         map_item_score[item] = predictions[i]
 
@@ -107,7 +107,7 @@ def _getHitRatio(ranklist, gtItem):
     return 0
 
 def _getNDCG(ranklist, gtItem):
-    for i in xrange(len(ranklist)):
+    for i in range(len(ranklist)):
         item = ranklist[i]
         if item == gtItem:
             return math.log(2) / math.log(i+2)

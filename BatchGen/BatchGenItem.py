@@ -20,9 +20,9 @@ def sampling(dataset, num_negatives):
         _item_input.append(i)
         _labels.append(1)
         # negative instances
-        for t in xrange(num_negatives):
+        for t in range(num_negatives):
             j = np.random.randint(num_items)
-            while dataset.trainMatrix.has_key((u, j)):
+            while (u, j) in dataset.trainMatrix:
                 j = np.random.randint(num_items)
             _user_input.append(u)
             _item_input.append(j)
@@ -81,6 +81,6 @@ def _remove_item(feature_mask, users, item):
 
 def _add_mask(feature_mask, features, num_max):
     # uniformalize the length of each batch
-    for i in xrange(len(features)):
+    for i in range(len(features)):
         features[i] = features[i] + [feature_mask] * (num_max + 1 - len(features[i]))
     return features

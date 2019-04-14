@@ -31,17 +31,17 @@ def _step1():
                 count = item
             if u == user:
                 if num > max:
-                    print >> train_rating, maxline,
+                    print(maxline, file=train_rating)
                     maxline = line
                     max = num
                 else:
-                    print >> train_rating, line,
+                    print(line, file=train_rating)
             else:
                 user = u
-                print >> test_rating, maxline,
+                print(maxline, file=test_rating)
                 maxline = line
-        print >> test_rating, maxline,
-    print count
+        print(maxline, file=test_rating)
+    print(count)
     _num_items = count
     test_rating.close()
     train_rating.close()
@@ -50,15 +50,15 @@ def _step2():
     ratingList = load_rating_file_as_list('Data/yelp.test.rating')
     trainingList = load_training_file_as_list('Data/yelp.train.rating')
     test_negative = open('Data/yelp.test.negative', 'w')
-    print _num_items
+    print(_num_items)
     for i in range(len(trainingList)):
-        print >> test_negative, "(" + str(ratingList[i][0]) + "," + str(ratingList[i][1]) + ")",
+        print("(" + str(ratingList[i][0]) + "," + str(ratingList[i][1]) + ")", file=test_negative)
         for j in range(100):
             item = np.random.randint(_num_items)
             while item in trainingList[j]:
                 item = np.random.randint(_num_items)
-            print >> test_negative, "\t" + str(item),
-        print >> test_negative, "\n",
+            print("\t" + str(item), file=test_negative)
+        print("\n", file=test_negative)
     test_negative.close()
 
 def load_rating_file_as_list(filename):
@@ -92,7 +92,7 @@ def load_training_file_as_list(filename):
                 items.append(i)
             line = f.readline()
     lists.append(items)
-    print "already load the trainList..."
+    print("already load the trainList...")
     return lists
 
 if __name__ == "__main__":

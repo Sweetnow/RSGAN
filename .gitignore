@@ -1,2 +1,4 @@
-./Log
-./graphs
+Log/
+graphs/
+.vscode/
+*.pyc

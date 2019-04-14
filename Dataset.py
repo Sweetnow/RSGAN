@@ -12,7 +12,7 @@ class Dataset(object):
     '''
     Loading the data file
         trainMatrix: load rating records as sparse matrix for class Data
-        trianList: load rating records as list to speed up user's feature retrieval
+        trainList: load rating records as list to speed up user's feature retrieval
         testRatings: load leave-one-out rating test for class Evaluate
         testNegatives: sample the items not rated by user
     '''
@@ -77,7 +77,7 @@ class Dataset(object):
                 if (rating > 0):
                     mat[user, item] = 1.0
                 line = f.readline()
-        print "already load the trainMatrix..."
+        print("already load the trainMatrix...")
         return mat
 
     def load_training_file_as_list(self, filename):
@@ -100,5 +100,5 @@ class Dataset(object):
                     items.append(i)
                 line = f.readline()
         lists.append(items)
-        print "already load the trainList..."
+        print("already load the trainList...")
         return lists

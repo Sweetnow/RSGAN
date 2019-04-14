@@ -13,7 +13,7 @@ class SaverFactory(object):
 
 class Saver(object):
     def save(self, model, sess):
-        Null
+        return NotImplemented
     def setPrefix(self, prefix = None):
         self.prefix = prefix
 
@@ -23,12 +23,12 @@ class MFSaver(Saver):
 
     def save(self, model, sess):
         if self.prefix == None:
-            print "prefix should be set by Saver.setPrefix(prefix)"
+            print("prefix should be set by Saver.setPrefix(prefix)")
             return
 
         params = sess.run([model.embedding_P, model.embedding_Q])
-        print 'saving model.embedding_P', params[0].shape, ', model.embedding_Q', params[1].shape,\
-              ' to', "MF_%s_*.txt" % self.prefix
+        print('saving model.embedding_P', params[0].shape, ', model.embedding_Q', params[1].shape,\
+              ' to', "MF_%s_*.txt" % self.prefix)
 
         f = open('MF_' + self.prefix + "_P.txt", 'w')
         np.savetxt(f, params[0])
@@ -44,10 +44,10 @@ class FISMSaver(Saver):
 
     def save(self, model, sess):
         if self.prefix == None:
-            print "prefix should be set by Saver.setPrefix(prefix)"
+            print("prefix should be set by Saver.setPrefix(prefix)")
             return
         params = sess.run([model.embedding_P, model.embedding_Q])
-        print 'saving model.embedding_P', params[0].shape, ', model.embedding_Q', params[1].shape,\
-              ' to',  "FISM_%s.npy" % self.prefix
+        print('saving model.embedding_P', params[0].shape, ', model.embedding_Q', params[1].shape,\
+              ' to',  "FISM_%s.npy" % self.prefix)
         np.save(self.prefix + ".npy", {'P': params[0], 'Q': params[1]})
 
